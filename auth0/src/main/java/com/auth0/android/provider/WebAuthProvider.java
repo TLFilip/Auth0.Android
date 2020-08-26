@@ -153,6 +153,7 @@ public class WebAuthProvider {
 
         private final Auth0 account;
         private final Map<String, String> values;
+        private final Map<String, String> headers;
         private boolean useBrowser;
         private boolean useFullscreen;
         private PKCE pkce;
@@ -167,6 +168,7 @@ public class WebAuthProvider {
             this.values = new HashMap<>();
 
             //Default values
+            this.headers = new HashMap<>();
             this.scheme = "https";
             this.useBrowser = true;
             this.useFullscreen = false;
@@ -309,6 +311,11 @@ public class WebAuthProvider {
             return this;
         }
 
+        public Builder withHeaders(@NonNull Map<String, String> headers) {
+            this.headers.putAll(headers);
+            return this;
+        }
+
         /**
          * Give a connection scope for this request.
          *
@@ -427,6 +434,7 @@ public class WebAuthProvider {
             manager.useFullScreen(useFullscreen);
             manager.useBrowser(useBrowser);
             manager.setCustomTabsOptions(ctOptions);
+            manager.setHeaders(headers);
             manager.setPKCE(pkce);
             manager.setIdTokenVerificationLeeway(leeway);
             manager.setIdTokenVerificationIssuer(issuer);
