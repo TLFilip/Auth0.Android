@@ -327,7 +327,7 @@ class OAuthManager extends ResumableManager {
         }
     }
 
-    private void addPKCEHeaders(Map<String, String> httpHeaders) {
+    private void addPKCEHeaders(@NonNull Map<String, String> httpHeaders) {
         if (!shouldUsePKCE()) {
             return;
         }
