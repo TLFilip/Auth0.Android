@@ -21,10 +21,10 @@ import java.util.List;
 import javax.net.ssl.SSLSocketFactory;
 
 import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -172,7 +172,7 @@ public class OkHttpClientFactoryTest {
     }
 
     private static void verifyTLS12NotEnforced(OkHttpClient client) {
-        verify(client, never()).setSslSocketFactory((SSLSocketFactory) any());
+        verify(client, never()).setSslSocketFactory(any(SSLSocketFactory.class));
     }
 
     private static void verifyTLS12Enforced(OkHttpClient client) {

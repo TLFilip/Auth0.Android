@@ -26,7 +26,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 21)
@@ -270,6 +270,22 @@ public class AuthenticationExceptionTest {
     public void shouldHaveOIDCInvalidCredentials() {
         values.put(CODE_KEY, "invalid_grant");
         values.put(ERROR_DESCRIPTION_KEY, "Wrong email or password.");
+        AuthenticationException ex = new AuthenticationException(values);
+        assertThat(ex.isInvalidCredentials(), is(true));
+    }
+
+    @Test
+    public void shouldHaveInvalidCredentialsOnPhonePasswordless() {
+        values.put(ERROR_KEY, "invalid_grant");
+        values.put(ERROR_DESCRIPTION_KEY, "Wrong phone number or verification code.");
+        AuthenticationException ex = new AuthenticationException(values);
+        assertThat(ex.isInvalidCredentials(), is(true));
+    }
+
+    @Test
+    public void shouldHaveInvalidCredentialsOnEmailPasswordless() {
+        values.put(ERROR_KEY, "invalid_grant");
+        values.put(ERROR_DESCRIPTION_KEY, "Wrong email or verification code.");
         AuthenticationException ex = new AuthenticationException(values);
         assertThat(ex.isInvalidCredentials(), is(true));
     }
